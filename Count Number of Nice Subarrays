@@ -1,0 +1,21 @@
+class Solution {
+private:
+    int fn(vector<int>& nums, int k){
+        int i=0,j=0,n=nums.size(),sum=0,ans=0;
+
+        while(j<n){
+            sum+=nums[j]%2;
+            j++;
+            while(sum>k){
+                sum-=nums[i]%2;
+                i++;
+            }
+            ans+=(j-i+1);
+        }
+        return ans;
+    }
+public:
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        return fn(nums,k)-fn(nums,k-1);
+    }
+};
