@@ -1,0 +1,52 @@
+
+//Solved the harder version
+
+class Solution {
+public:
+    long long incremovableSubarrayCount(vector<int>& nums) {
+        int n=nums.size();
+        long long ans=0;
+        if(n==1) return 1;
+
+        vector<int> pre,post;
+
+        int i=0,j=n-1;
+
+        while(i<n-1&&nums[i]<nums[i+1]){
+            pre.push_back(nums[i]);
+            i++;
+        }
+        pre.push_back(nums[i]);
+
+        while(j>0&&nums[j]>nums[j-1]){
+            post.push_back(nums[j]);
+            j--;
+        }
+        post.push_back(nums[j]);
+
+        if(j<i){
+            return 1LL*n*(1LL*n+1)/2;
+        }
+        
+        reverse(post.begin(),post.end());
+
+        ans+=1LL*pre.size();
+        ans+=1LL*post.size();
+        ans++;
+
+        //counting for the combined of both sides
+
+        int n1=pre.size(),n2=post.size();
+        i=0;
+        j=0;
+
+        while(i<n1&&j<n2){
+            if(pre[i]<post[j]){
+                ans+=(1LL*(n2-j));
+                i++;
+            }
+            else j++;
+        }
+        return ans;
+    }
+};
