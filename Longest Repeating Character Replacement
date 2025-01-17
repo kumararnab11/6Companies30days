@@ -1,0 +1,30 @@
+
+//when doing mp[i]-- then we are not cross checking maxi... why?
+//suppose you are given k=2... you got an array of 6 size in current ans
+//therefore your maxi is 4 now
+//in next step you are getting a diff ele than maxi.. so you need to trim i
+//now think do you need to calculate ans for lesser maxis?
+//only calculate if getting a better maxi
+//bcz in order to get ans>6 maxi must be >4
+
+
+
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        int n=s.size(),ans=0,i=0,j=0,maxi=0;
+        map<char,int> mp;
+
+        while(j<n){
+            mp[s[j]]++;
+            maxi=max(maxi,mp[s[j]]);
+            j++;
+            while(((j-i)-maxi)>k){
+                mp[s[i]]--;
+                i++;
+            }
+            ans=max(ans,j-i);
+        }
+        return ans;
+    }
+};
