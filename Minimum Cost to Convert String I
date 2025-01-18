@@ -1,0 +1,44 @@
+class Solution {
+private:
+    void fwa(vector<vector<int>>& mat) {
+        // Code here
+        int k=0,n=mat.size();
+        
+        for(int k=0;k<n;k++){
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    if(i==j||i==k||j==k||mat[i][k]==-1||mat[k][j]==-1)continue;
+                    if(mat[i][j]==-1){
+                        mat[i][j]=mat[i][k]+mat[k][j];
+                    }
+                    else mat[i][j]=min(mat[i][j],mat[i][k]+mat[k][j]);
+                }
+            }
+        }
+    }
+public:
+    long long minimumCost(string src, string t, vector<char>& original, vector<char>& changed, vector<int>& cost) {
+        int n=src.size();
+        vector<vector<int>> adj(26, vector<int>(26, 1e9));
+
+        for(int i=0;i<original.size();i++){
+            adj[original[i]-'a'][changed[i]-'a']=min(cost[i],adj[original[i]-'a'][changed[i]-'a']);
+        }
+
+        fwa(adj);
+
+        long long ans=0;
+
+        for(int i=0;i<n;i++){
+            if(t[i]==src[i])continue;
+            if(adj[src[i]-'a'][t[i]-'a']==1e9){
+                cout<<src[i]<<" "<<t[i];
+                return -1;
+            }
+            ans+=adj[src[i]-'a'][t[i]-'a'];
+        }
+
+        return ans;
+
+    }
+};
