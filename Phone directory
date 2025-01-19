@@ -1,0 +1,27 @@
+class Solution{
+public:
+    vector<vector<string>> displayContacts(int n, string contact[], string s)
+    {
+        // code here
+        int m=s.size();
+        
+        sort(contact,contact+n);
+        
+        vector<vector<string>> ans(m);
+        
+        for(int i=1;i<=m;i++){
+            string word=s.substr(0,i);
+            //cout<<word<<endl;
+            
+            for(int j=0;j<n;j++){
+                if(j!=0&&contact[j]==contact[j-1])continue;
+                if(contact[j].size()>=i&&contact[j].substr(0,i)==word){
+                    ans[i-1].push_back(contact[j]);
+                }
+            }
+        }
+        
+        for(int i=0;i<m;i++)if(ans[i].size()==0)ans[i].push_back("0");
+        return ans;
+    }
+};
