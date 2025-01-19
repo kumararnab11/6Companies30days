@@ -1,0 +1,62 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        
+
+        //check vertical lines;
+
+        unordered_map<char,int> mp;
+
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if(board[i][j]=='.') continue;
+                if(mp[board[i][j]]!=0) return 0;
+                else mp[board[i][j]]++;
+            }
+
+            mp.clear();
+        }
+
+        //checking horizontal lines
+
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if(board[j][i]=='.') continue;
+                if(mp[board[j][i]]!=0) return 0;
+                else mp[board[j][i]]++;
+            }
+
+            mp.clear();
+        }
+
+        //checking sub boxes
+
+
+        for(int i=0;i<9;i++){
+            int j=i/3;
+            j*=3;
+            int k=i%3;
+            k*=3;
+            int a=3;
+
+            while(a--){
+                int b=3;
+                while(b--){
+                    if(board[j][k]=='.'){
+                        k++;
+                        continue;
+                    };
+                    if(mp[board[j][k]]!=0) return 0;
+                    else mp[board[j][k]]++;
+                    k++;
+                }
+                j++;
+                k=i%3;
+                k*=3;
+            }
+            mp.clear();
+        }
+
+        return 1;
+    }
+};
