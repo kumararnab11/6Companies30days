@@ -1,0 +1,22 @@
+class Solution {
+private:
+    int fn(int a,int h,int c,int k,map<vector<int>,int> &dp){
+
+        if(c>k+1)return 0;
+        //cout<<dp[a][h][c]<<endl;
+        if(dp.find({a,h,c})!=dp.end())return dp[{a,h,c}];
+
+        int x=0;
+        if(c==k)x++;
+        x+=fn(1,h+1,c+pow(2,h),k,dp);//pow wala
+        if(a==1&&c>0)x+=fn(0,h,c-1,k,dp);
+        cout<<a<<" "<<h<<" "<<c<<" "<<x<<endl;
+        return dp[{a,h,c}]=x;
+    }
+public:
+    int waysToReachStair(int k) {
+        map<vector<int>,int> dp;
+        fn(1,0,1,k,dp);
+        return dp[{1,0,1}];
+    }
+};
