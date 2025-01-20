@@ -1,0 +1,22 @@
+class Solution {
+  public:
+    Node* linkdelete(Node* head, int n, int m) {
+        // code here
+        if(n==0)return head;
+        if(m==0)return NULL;
+        
+        Node* ptr=head;
+        Node* last;
+        
+        while(ptr!=NULL){
+            int x=m-1;
+            while(ptr&&x--)ptr=ptr->next;
+            last=ptr;
+            if(!ptr)break;
+            int y=n+1;
+            while(ptr&&y--)ptr=ptr->next;
+            last->next=ptr;
+        }
+        return head;
+    }
+};
