@@ -1,0 +1,13 @@
+class Solution {
+public:
+    string convertToTitle(int n) {
+        
+        string s="";
+       
+        while(n>0){
+            s=char('A'+(n-1)%26)+s; // here we are addig the prev strig after the new .... using n-1 bcz we need to add 1 less...ex A+3 is D not C ... and if n 26 then if we do n-1%26 it will give z
+            n=(n-1)/26;
+        }
+        return s;
+    }
+};
