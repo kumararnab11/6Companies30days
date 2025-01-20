@@ -1,0 +1,27 @@
+class Solution {
+private:
+    int fn(vector<int> need,vector<int>& price, vector<vector<int>>& offer,map<vector<int>,int> &dp ){
+        if(dp.find(need)!=dp.end())return dp[need];
+
+        int minP=0,ind=1;
+        for(int i=0;i<price.size();i++)minP+=need[i]*price[i];
+
+        for(int i=0;i<offer.size();i++){
+            ind=1;
+            for(int j=0;j<need.size();j++){
+                if(need[j]<offer[i][j])ind=0;
+            }
+            if(ind==1){
+                vector<int> newNeed=need;
+                for(int j=0;j<need.size();j++)newNeed[j]-=offer[i][j];
+                minP=min(minP,offer[i][need.size()]+fn(newNeed,price,offer,dp));
+            }
+        }
+        return dp[need]=minP;
+    }
+public:
+    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs) {
+        map<vector<int>,int> dp;
+        return fn(needs,price,special,dp);
+    }
+};
