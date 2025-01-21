@@ -1,0 +1,28 @@
+class Solution {
+public:
+int getPair(vector<int> nums,int target){
+    int i=0;
+    int j=1,cnt=0,n=nums.size(); 
+    while(j<n){        
+        if((nums[j]-nums[i])==target){
+            cnt++;
+            i++;
+            while(i<n&&nums[i]==nums[i-1])i++;
+            j++;
+            while(j<n&&nums[j]==nums[j-1])j++;
+        }else if((nums[j]-nums[i])<target){
+            j++;
+            while(j<n&&nums[j]==nums[j-1])j++;
+        }else{
+            i++;
+            while(i<n&&nums[i]==nums[i-1])i++;
+        }
+        if(i>=j) j=i+1;
+    }
+    return cnt;
+}
+    int findPairs(vector<int>& nums, int k) {
+        sort(nums.begin(),nums.end());       
+        return getPair(nums,k);
+    }
+};
