@@ -1,0 +1,46 @@
+class Solution {
+public:
+    bool isValidSerialization(string s) {
+        if(s=="")return 1;
+        queue<int> q;
+
+        vector<int> v;
+
+        int i=0;
+        while(i<s.size()){
+            string temp="";
+            if(s[i]=='#'){
+                v.push_back(100000);
+                i++;
+                if(i<s.size()&&s[i]==',')i++;
+                continue;
+            }
+            while(i<s.size()&&s[i]!=',')temp+=s[i++];
+            i++;
+            v.push_back(stoi(temp));
+        }
+
+        if(v[0]!=100000)q.push(v[0]);
+
+        i=1;
+
+        while(!q.empty()){
+            int temp=q.front();
+            q.pop();
+
+            if(i>=v.size())return 0;
+            int a=v[i++];
+            if(i>=v.size())return 0;
+            int b=v[i++];
+
+            if(a!=100000){
+                q.push(a);
+            }
+            if(b!=100000){
+                q.push(b);
+            }
+        }
+
+        return i==v.size();
+    }
+};
