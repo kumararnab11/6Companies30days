@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int numFriendRequests(vector<int>& ages) {
+        int n=ages.size(),cnt=0;
+        sort(ages.begin(),ages.end());
+        for(int i=n-1;i>=0;i--){
+            int f=floor(ages[i]/2.0+7);
+            //if(ages[i]>=100)f=max(99,f);
+            cout<<f<<" ";
+            int x=upper_bound(ages.begin(),ages.end(),f)-ages.begin();
+            int y=upper_bound(ages.begin(),ages.end(),ages[i])-ages.begin();
+            cnt+=max(1,(y-x));
+            cout<<x<<" "<<y<<endl;
+        }
+        return cnt-n;
+    }
+};
