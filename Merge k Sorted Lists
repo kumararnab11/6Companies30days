@@ -1,0 +1,29 @@
+#define x pair<int, ListNode*>
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        int n = lists.size();
+        priority_queue<x, vector<x>, greater<x>> pq;
+
+        for (int i = 0; i < n; i++) {
+            if (lists[i] != nullptr) {
+                pq.push({lists[i]->val, lists[i]});
+            }
+        }
+
+        ListNode* dummy = new ListNode(-1);
+        ListNode* temp = dummy;
+
+        while (!pq.empty()) {
+            ListNode* l = pq.top().second;
+            pq.pop();
+            temp->next = l;
+            temp = temp->next;
+            if (l->next) {
+                pq.push({l->next->val, l->next});
+            }
+        }
+
+        return dummy->next;
+    }
+};
