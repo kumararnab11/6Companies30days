@@ -1,0 +1,23 @@
+class Solution {
+int fn(int l,int r,string &s,map<string,int> &mp,vector<int> &dp){
+        if(l>=r)return 0;
+        if(dp[l]!=-1)return dp[l];
+        int a=1+fn(l+1,r,s,mp,dp);
+        string str="";
+        for(int i=l;i<r;i++){
+            str+=s[i];
+            if(mp.find(str)!=mp.end()){
+                a=min(a,fn(i+1,r,s,mp,dp));
+            }
+        }
+        return dp[l]=a;
+    }
+public:
+    int minExtraChar(string s, vector<string>& dictionary) {
+        int n=s.size();
+        vector<int> dp(n,-1);
+        map<string,int> mp;
+        for(auto it:dictionary)mp[it]++;
+        return fn(0,n,s,mp,dp);
+    }
+};
