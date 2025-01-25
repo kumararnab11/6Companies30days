@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int stoneGameVI(vector<int>& aliceValues, vector<int>& bobValues) {
+        int n=aliceValues.size();
+
+        priority_queue<pair<int,int>> pq;
+
+        for(int i=0;i<n;i++){
+            pq.push({aliceValues[i]+bobValues[i],i});//we are taking addition bcz .... combined highest indicating (our profit+opponent's loss)
+        }
+        int turn=0,alice=0,bob=0;
+
+        while(turn<n){
+            if(turn%2==0)alice+=aliceValues[pq.top().second];
+            else bob+=bobValues[pq.top().second];
+            pq.pop();
+            turn++;
+        }
+        cout<<alice<<" "<<bob;
+        if(alice==bob)return 0;
+        if(alice>bob)return 1;
+        return -1;
+    }
+};
