@@ -1,0 +1,70 @@
+/**
+ * // This is the MountainArray's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class MountainArray {
+ *   public:
+ *     int get(int index);
+ *     int length();
+ * };
+ */
+
+class Solution {
+public:
+    int findInMountainArray(int target, MountainArray &mountainArr) {
+        
+        int n=mountainArr.length();
+
+        int peak=-1;
+
+        int low=1,high=n-2,mid;
+
+        while(low<=high){
+            mid=low+(high-low)/2;
+
+            int ele=mountainArr.get(mid);
+            int prev=mountainArr.get(mid-1);
+            int next=mountainArr.get(mid+1);
+
+            if(ele>prev&&ele>next){
+                peak=mid;
+                break;
+            }
+
+            else if(ele>prev&&ele<next) low=mid+1;
+            else high = mid-1;
+        }
+
+        if(mountainArr.get(peak)==target) return peak;
+        if(mountainArr.get(peak)<target) return -1;//bcz peak is the max value
+
+        //trying to find in left half
+        low=0,high=peak-1;
+
+        while(low<=high){
+            mid=low+(high-low)/2;
+
+            int ele=mountainArr.get(mid);
+
+            if(ele>=target) high=mid-1;
+            else low=mid+1;
+        }
+
+        if(low>=0&&low<n)if(mountainArr.get(low)==target) return low;
+
+        //finding in right half
+        low=peak+1,high=n-1;
+
+        while(low<=high){
+            mid=low+(high-low)/2;
+
+            int ele=mountainArr.get(mid);
+
+            if(ele<=target) high=mid-1;
+            else low=mid+1;
+        }
+
+        if(low>=0&&low<n)if(mountainArr.get(low)==target) return low;
+
+        return -1;      
+    }
+};
