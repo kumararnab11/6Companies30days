@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int countCollisions(string directions) {
+        string s=directions;
+        int n=s.size(),ans=0,brought=0;
+        for(int i=1;i<n;i++){
+            if(s[i]=='S'){
+                //cout<<"s\n";
+                if(s[i-1]=='R'){
+                    ans+=1;
+                    ans+=brought;
+                    brought=0;
+                }
+                else{
+                    brought=0;
+                }
+            }
+            else if(s[i]=='R'){
+                //cout<<"r\n";
+                if(s[i-1]=='R')brought++;
+                else brought=0;
+            }
+            else{
+                //cout<<"l\n";
+                if(s[i-1]=='R'){
+                    ans+=2;
+                    ans+=brought;
+                    s[i]='S';
+                }
+                else if(s[i-1]=='S'){
+                    ans++;
+                    brought=0;
+                    s[i]='S';
+                }
+                else{
+                    brought=0;
+                }
+            }
+            //cout<<i<<" "<<brought<<" "<<ans<<"\n";
+        }
+        //cout<<s;
+        return ans;
+    }
+};
