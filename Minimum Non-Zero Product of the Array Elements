@@ -1,0 +1,45 @@
+//by observation
+//will try to make maximum numbers 1
+//we can make 2^p-1 /2 ones
+// ans is 
+// let 2^p -1=x    y=x-1
+// x*pow(y,x/2)
+
+//Ex p=3 ... after modification we can make
+//001 001 001 110 110 110 111
+// ans is 7*pow(6,3)
+
+
+
+#define ll long long
+class Solution {
+    const int mod = 1e9 + 7;
+
+    ll power(ll a, ll b){
+        if(a == 0){
+            return 0;
+        }
+        ll res = 1;
+        a %= mod;
+        while(b > 0){
+            if(b & 1){
+                res = (res * a) % mod;
+            }
+            b >>= 1;
+            a = (a * a) % mod;
+        }
+        return res;
+    }
+public:
+    int minNonZeroProduct(int p) {
+        if(p == 1){
+            return 1;
+        }
+
+        ll largest = (1ll << p) - 1;         // 2^p - 1
+        ll sec_largest = largest - 1;        // 2^p - 2
+        ll times = largest/2;                // (2^p -1) /2
+
+        return (power(sec_largest, times) * (largest%mod) * 1ll) % mod;
+    }
+};
