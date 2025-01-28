@@ -1,0 +1,28 @@
+class DataStream {
+    queue<int> q;
+    int sz,val,cnt=0;
+public:
+    DataStream(int value, int k) {
+        sz=k;
+        val=value;
+    }
+    
+    bool consec(int num) {
+        q.push(num);
+        if(num==val)cnt++;
+        if(q.size()<sz)return false;
+        else{
+            if(q.size()>sz){
+                if(q.front()==val)cnt--;
+                q.pop();
+            }
+            return cnt==sz;
+        }
+    }
+};
+
+/**
+ * Your DataStream object will be instantiated and called as such:
+ * DataStream* obj = new DataStream(value, k);
+ * bool param_1 = obj->consec(num);
+ */
