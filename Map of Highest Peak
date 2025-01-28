@@ -1,0 +1,36 @@
+vector<vector<int>> dir={{0,1},{0,-1},{1,0},{-1,0}};
+class Solution {
+public:
+    vector<vector<int>> highestPeak(vector<vector<int>>& v) {
+        int n=v.size(),m=v[0].size(),maxi=0;
+
+        queue<pair<int,int>> q;
+        vector<vector<int>> vis(n,vector<int>(m));
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                v[i][j]^=1;
+                if(v[i][j]==0){
+                    q.push({i,j});
+                    vis[i][j]=1;
+                }
+            }
+        }
+
+        while(!q.empty()){
+            auto [x,y]=q.front();
+            q.pop();
+            for(int i=0;i<4;i++){
+                int nx=x+dir[i][0];
+                int ny=y+dir[i][1];
+
+                if(nx>=n||nx<0||ny<0||ny>=m||vis[nx][ny]==1)continue;
+                v[nx][ny]=v[x][y]+1;
+                maxi=max(maxi,v[nx][ny]);
+                q.push({nx,ny});
+                vis[nx][ny]=1;
+            }
+        }
+        return v;
+    }
+};
