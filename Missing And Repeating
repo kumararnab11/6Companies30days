@@ -1,0 +1,16 @@
+class Solution {
+  public:
+    vector<int> findTwoElement(vector<int>& arr) {
+        int n = arr.size();
+        int repeatingNum = -1,missingNum = -1;
+        for(int i=0;i<n;i++){
+            int indi = abs(arr[i]);
+            if(arr[indi-1]<0) {repeatingNum = indi; }
+            else arr[indi-1]*=-1;
+        }
+        for(int i=0;i<n;i++){
+            if(arr[i] > 0) {missingNum = i+1; break;}
+        }
+        return vector<int>{repeatingNum, missingNum};
+    }
+};
