@@ -1,0 +1,27 @@
+#define MOD 1000000007
+class Solution {
+private:
+    int fn(int i,int e,int k,int steps,vector<vector<int>> &dp){
+        if(steps==k){
+            if(i==e)return 1;
+            else return 0;
+        }
+
+        if(dp[i][steps]!=-1)return dp[i][steps];
+        long long a=0;
+        a+=fn(i+1,e,k,steps+1,dp);
+        a%=MOD;
+        a+=fn(i-1,e,k,steps+1,dp);
+        a%=MOD;
+
+        return dp[i][steps]=a;
+    }
+public:
+    int numberOfWays(int s, int e, int k) {
+        s+=k;
+        e+=k; // doing bcz when going left idx should not be -ve
+        vector<vector<int>> dp(3000,vector<int>(1100,-1));
+
+        return fn(s,e,k,0,dp);
+    }
+};
